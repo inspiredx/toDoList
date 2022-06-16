@@ -5,7 +5,7 @@ const todosWrapper = document.querySelector('.todos-wrapper');
 let tasks;
 !localStorage.tasks ? tasks = [] : tasks = JSON.parse(localStorage.getItem('tasks'));
 
-let todoItemElems = [];
+let elements = [];
 
 function Task(description) {    
     this.description = description;
@@ -17,7 +17,7 @@ const createTemplate = (task, index) => {           //Создание шабл�
     <div class="todo-item ${task.completed ? 'checked' : ''}">
             <div class="description">${task.description}</div>
             <div class="buttons">
-                    <input onclick="completeTask(${index})" class="btn-complete" type="checkbox" ${task.completed ? 'checked' : ''}>
+                    <input onclick="taskToggle(${index})" class="btn-toggle" type="checkbox" ${task.completed ? 'checked' : ''}>
                     <button onclick="deleteTask(${index})" class="btn-delete">Удалить</button>     
             </div>
     </div>
@@ -26,11 +26,11 @@ const createTemplate = (task, index) => {           //Создание шабл�
 
 const fillHtmlList = () => {
     todosWrapper.innerHTML = "";
-    if (tasks.length > 0) {
+    if (tasks.length > 0 && tasks.value !== '') {
         tasks.forEach((item, index) => {
             todosWrapper.innerHTML += createTemplate(item, index);
         });
-        todoItemElems = document.querySelectorAll('.todo-item');
+        elements = document.querySelectorAll('.todo-item');
     }
 }
 
@@ -40,12 +40,12 @@ const updateLocal = () => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-const completeTask = index => {     
+const taskToggle = index => {     
     tasks[index].completed = !tasks[index].completed //Меняю на противоположное значение
     if(tasks[index].completed) {
-        todoItemElems[index].classList.add('checked');             
+        elements[index].classList.add('checked');             
     } else {
-        todoItemElems[index].classList.remove('checked');
+        elements[index].classList.remove('checked');
     }
     updateLocal();
     fillHtmlList();
