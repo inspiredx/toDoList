@@ -26,7 +26,7 @@ const createTemplate = (task, index) => {           //Создание шабл�
 
 const fillHtmlList = () => {
     todosWrapper.innerHTML = "";
-    if (tasks.length > 0 && tasks.value !== '') {
+    if (tasks.length > 0) {
         tasks.forEach((item, index) => {
             todosWrapper.innerHTML += createTemplate(item, index);
         });
@@ -51,7 +51,11 @@ const taskToggle = index => {
     fillHtmlList();
 }
 
+
 addTaskBtn.addEventListener('click', () => {
+    if(!descTaskInput.value) {
+        return;
+    }; 
     tasks.push(new Task(descTaskInput.value));
     updateLocal();
     fillHtmlList();
