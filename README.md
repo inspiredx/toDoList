@@ -1,3 +1,3 @@
 # toDoList
 
-Список дел на Javascript
+To do list made with JavaScript
